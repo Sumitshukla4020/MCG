@@ -1,18 +1,20 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import { Router } from 'express';
+import * as userController from '../controllers/user.controller.js';
+import { body } from 'express-validator';
+import * as authMiddleware from '../middleware/auth.middleware.js';
 
-const userSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-}, { timestamps: true });
+const router = Router();
 
-userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return;
-  this.password = await bcrypt.hash(this.password, 6);
-});
 
-userSchema.methods.comparePassword = function (password) {
-  return bcrypt.compare(password, this.password);
-};
 
-export default mongoose.model("User", userSchema);
+router.post('/register',
+    body('email').isEmail().withMessage('Email must be a valid email address'),
+    body('password').isLength({ min: 3 }).withMessage('Password must be at least 3 characters long'),
+    userController.createUserController);
+
+router.post('/login',
+    body('email').isEmail().withMessage('Email must be a valid email address'),
+    body('password').isLength({ min: 3 }).withMessage('Password must be at least 3 characters long'),
+    userController.loginController);
+
+router.get('/logout', authMiddleware.authUser, userController.logoutController);
