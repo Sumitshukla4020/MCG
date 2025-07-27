@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRoutes.js";
 import sessionRoutes from './routes/sessionRoutes.js';
 import generateRoutes from './routes/llmRoutes.js';
+import exportRoutes from './routes/llmRoutes.js'; 
+
 
 
 
@@ -27,6 +29,9 @@ app.use("/api/v1/sessions", sessionRoutes);
 //llm
 app.use('/api/v1', generateRoutes);
 app.use('/api', generateRoutes);
+
+app.use('/api', exportRoutes);
+
 
 
 
