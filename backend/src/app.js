@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRoutes.js";
 import sessionRoutes from './routes/sessionRoutes.js';
+import generateRoutes from './routes/llmRoutes.js';
+
 
 
 const app = express();
@@ -19,8 +21,14 @@ app.use(cookieParser());
 // Routes
 app.use("/api/v1/auth", authRouter);
 
-// Session Routes (✅ Add this)
+// Session Routes 
 app.use("/api/v1/sessions", sessionRoutes);
+
+//llm
+app.use('/api/v1', generateRoutes);
+app.use('/api', generateRoutes);
+
+
 
 
 export default app;
