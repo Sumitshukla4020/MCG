@@ -22,7 +22,7 @@ router.get('/export/:sessionId', authUser, exportSessionZip);
 
 router.post('/refine/:id', authUser, refineComponent);
 
-router.patch('/components/:id', authUser, autoSaveComponent);
+router.patch('/autosave/:id', authUser, autoSaveComponent);
 
 
 
